@@ -18,15 +18,24 @@ export const addSchedule = async (req, res) => {
     }
 };
 
-// Get All Schedules
+// Get All Schedules with specific fields
 export const getSchedules = async (req, res) => {
     try {
-        const schedules = await Schedule.find().populate('route bus');
+        // Define the fields you want to select
+        const selectedFields = 'departureTime arrivalTime status createdAt';
+
+        // Fetch schedules with the selected fields
+        const schedules = await Schedule.find()
+            .select(selectedFields)  // Only select the specified fields
+            .populate('route bus', 'start end licensePlate');  // Populate specific fields
+            // Populating the route and bus references if needed
+
         res.send({ message: 'Schedules fetched successfully', schedules });
     } catch (error) {
         res.status(500).send({ message: error.message });
     }
 };
+
 
 // Update Schedule
 export const updateSchedule = async (req, res) => {

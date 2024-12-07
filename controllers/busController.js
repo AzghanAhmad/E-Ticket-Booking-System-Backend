@@ -22,7 +22,7 @@ export const createBus = async (req, res) => {
 export const getBuses = async (req, res) => {
     try {
         // Fetch all buses with their associated driver and route details
-        const buses = await Bus.find().populate('driver assignedRoute');
+        const buses = await Bus.find().populate('licensePlate driver assignedRoute type');
 
         // Count total buses
         const totalBuses = buses.length;

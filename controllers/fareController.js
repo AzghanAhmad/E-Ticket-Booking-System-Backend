@@ -21,7 +21,9 @@ export const addFare = async (req, res) => {
 // Get All Fares
 export const getFares = async (req, res) => {
     try {
-        const fares = await Fare.find().populate('route');
+        const fares = await Fare.find()
+            .populate("route") // Populate route details
+            .select("route baseFare additionalFarePerStop createdAt updatedAt");
         res.send({ message: 'Fares fetched successfully', fares });
     } catch (error) {
         res.status(500).send({ message: error.message });

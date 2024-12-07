@@ -14,7 +14,7 @@ export const createRoute = async (req, res) => {
 
 export const getRoutes = async (req, res) => {
     try {
-        const routes = await Route.find().populate('buses');
+        const routes = await Route.find().populate('start end buses');
         res.send(routes);
     } catch (error) {
         res.status(500).send({ message: error.message || 'Server Error' });

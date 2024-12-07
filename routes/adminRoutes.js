@@ -12,7 +12,7 @@ import { createRoute, getRoutes, updateRoute, deleteRoute } from '../controllers
 import { addSchedule, getSchedules, updateSchedule, deleteSchedule } from '../controllers/scheduleController.js';
 import { addTicket, getTickets, updateTicket, deleteTicket } from '../controllers/ticketController.js';
 import { addTransaction, getTransactions, updateTransaction, deleteTransaction } from '../controllers/transactionController.js';
-
+import { getStats } from '../controllers/statsController.js';
 
 const router = express.Router();
 
@@ -82,5 +82,7 @@ router.get('/transactions', getTransactions);
 router.put('/transactions/:id', updateTransaction);
 router.delete('/transactions/:id', deleteTransaction);
 
+//check stats
+router.get('/stats', getStats);
 
 export default router;
