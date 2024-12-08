@@ -92,3 +92,54 @@ export const loginUser = async (req, res) => {
         handleError(res, error);
     }
 };
+
+
+// Function to add a new user
+export const addUser = async (req, res) => {
+    const { name, email, password, role } = req.body;
+
+    // Check if all fields are provided
+    if (!name || !email || !password || !role) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
+    try {
+        // Check if the email already exists
+        const userExists = await User.findOne({ email });
+        if (userExists) {
+            return res.status(400).json({ message: "Email already exists" });
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create a new user
+        const newUser = new User({
+            name,
+            email,
+            password: hashedPassword, // Store hashed password
+            role,
+        });
+
+        // Save the user to the database
+        const savedUser = await newUser.save();
+
+        // Optionally, generate a token for the user
+        const token = jwt.sign(
+            { id: savedUser._id, role: savedUser.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        res.status(201).json({ 
+            _id: savedUser._id,
+            name: savedUser.name,
+            email: savedUser.email,
+            role: savedUser.role,
+            token, // Sending token in response (optional)
+        });
+    } catch (error) {
+        console.error("Error adding user:", error);
+        res.status(500).json({ message: "Server error, please try again" });
+    }
+};

@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllAdmins,updateAdmin,deleteAdmin} from '../controllers/adminController.js';
+import { getAllAdmins,updateAdmin,deleteAdmin,getAllBookings,getAllRefunds,approveRefund,getTotalBookings,addRefund} from '../controllers/adminController.js';
 import { authenticateToken } from '../middleware/auth.js';
 import { authorizeAdmin } from '../middleware/authorizeAdmin.js';
 import { addFare, getFares, updateFare, deleteFare } from '../controllers/fareController.js';
@@ -19,8 +19,13 @@ const router = express.Router();
 
 // Admin Management
 router.get('/admins', authenticateToken,authorizeAdmin, getAllAdmins);
-router.put('/admin/:id', authenticateToken,authorizeAdmin, updateAdmin);
-router.delete('/admin/:id', authenticateToken,authorizeAdmin, deleteAdmin);
+router.put('/admins/:id', authenticateToken,authorizeAdmin, updateAdmin);
+router.delete('/admins/:id', authenticateToken,authorizeAdmin, deleteAdmin);
+router.get('/admin/refunds',getAllRefunds);
+router.get('/admin/bookings',getAllBookings);
+router.get('/admin/refunds/:refundId/approve',approveRefund);
+router.post("/admin/refunds/add", addRefund);
+router.get('/admin//bookings/total',getTotalBookings);
 
 // Fare Routes
 router.post('/fares', addFare);

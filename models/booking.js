@@ -7,6 +7,7 @@ const bookingSchema = new mongoose.Schema({
     schedule: { type: mongoose.Schema.Types.ObjectId, ref: 'Schedule', required: true },
     seatsBooked: { type: Number, required: true },
     totalFare: { type: Number, required: true },
+    paymentStatus: { type: String, enum: ["paid", "pending"], default: "pending" },
 });
 
 export default mongoose.model('Booking', bookingSchema);

@@ -1,5 +1,5 @@
 import Bus from '../models/bus.js';
-import Route from '../models/routes.js';
+import Refund from '../models/refund.js';
 import Driver from '../models/driver.js';
 import User from '../models/user.js';
 
@@ -9,13 +9,13 @@ export const getStats = async (req, res) => {
         const totalBuses = await Bus.countDocuments();
 
         // Calculate buses currently on a route
-        const busesOnRoute = await Bus.countDocuments({ assignedRoute: { $ne: null } });
+        const busesOnRoute = await Bus.countDocuments({ status: 'Active' });
 
         // Calculate total drivers
         const totalDrivers = await Driver.countDocuments();
 
         // Calculate pending refunds (assuming a separate Refund schema, adjust logic accordingly)
-        const pendingRefunds = 0; // Placeholder, replace with actual query when Refund schema is available
+        const pendingRefunds = await Refund.countDocuments({ refundStatus: 'pending' }); // Placeholder, replace with actual query when Refund schema is available
 
         // Calculate total admins
         const totalAdmins = await User.countDocuments({ role: 'admin' });
