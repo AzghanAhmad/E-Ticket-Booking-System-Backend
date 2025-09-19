@@ -41,7 +41,7 @@ It provides the RESTful API for handling bookings, user management, and authenti
 ## 🖥️ Setup & Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/AzghanAhmad/e-ticket-booking-system.git
+   git clone https://github.com/AzghanAhmad/E-Ticket-Booking-System-Backend.git
    ```
 2. Navigate to the backend folder:
    ```bash
